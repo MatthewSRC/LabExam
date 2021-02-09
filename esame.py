@@ -6,6 +6,10 @@ class CSVTimeSeriesFile:
 
   # Inizializzazione con passaggio del parametro "nome" del file
   def __init__(self, name):
+    # Primo controllo, controllo che sia un valore string, che non sia vuota e che abbia '.' nel nome
+    if not isinstance(name, str) or name == '' or '.' not in name:
+      raise ExamException('Errore, nome file non valido')
+      
     self.name = name
 
   # Funzione per prendere i dati
@@ -13,7 +17,7 @@ class CSVTimeSeriesFile:
     # Inizializzo array vuoto
     data = []
 
-    # Utilizzo un try except per controllare che tutto fili liscio
+    # Secondo controllo sul nome del file, utilizzo un try except per controllare che tutto fili liscio
     try:
       my_file = open(self.name, "r") 
     except:
@@ -50,6 +54,10 @@ class CSVTimeSeriesFile:
 
         my_data = [ epoch, temp ]
         data.append(my_data)
+
+    # Controllo che ci sia almeno un dato    
+    if len(data) == 0:
+      raise ExamException('Errore, lista valori non valda')
 
     return data
 
